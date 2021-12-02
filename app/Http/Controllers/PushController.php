@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Notifications\PushDemo;
 use App\Models\User;
-use Illuminate\Notifications\Notification;
-// use Notification;
+use Notification;
 use Illuminate\Support\Facades\Auth;
 
 class PushController extends Controller
 {
+    // use Notification;
+    
     public function __construct()
     {
         $this->middleware('auth');
@@ -22,8 +23,8 @@ class PushController extends Controller
  * @return \Illuminate\Http\Response
  */
 public function push(){
-    dd('test');
-    // Notification::send(User::all(),new PushDemo);
+    // dd('test');
+    Notification::send(User::all(),new PushDemo);
     return redirect()->back();
 }
 

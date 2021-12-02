@@ -18,4 +18,8 @@ class AdminController extends Controller
             return view('admin.pages.error-404');
         }
     }
+
+    public function contactNotification(){
+        return auth()->user()->unreadNotifications;
+    }
 }

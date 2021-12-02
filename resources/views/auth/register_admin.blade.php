@@ -128,7 +128,7 @@
                     },
                     email: {
                         required: "Veuillez entrer votre adresse email.",
-                        email: "L'adresse email entrée est invalide."
+                        email: "L'adresse email entrée est invalide (ex: email@email.com)."
                     },
                     password: {
                         required: "Veuillez entrer votre mot de passe.",

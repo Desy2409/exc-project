@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -17,8 +18,16 @@ class UsersTableSeeder extends Seeder
     {
         $year = date('Y');
 
-        DB::table('users')->insert([
-            ['name'=>'desy','email'=>'desy@dev-desy.com','password'=>Hash::make('password@'),'token'=>Hash::make('desy'.'desy@dev.com'.'@$@'.$year)],
+        $existingUser = User::where('email', 'desy@dev-desy.com')->first();
+        if(!$existingUser){
+            User::create([
+            'user_type' => 'Admin', 
+            'name' => 'Desy DEV', 
+            'email' => 'desy@dev-desy.com', 
+            'password' => Hash::make('password@'), 
+            'token' => Hash::make('desy' . 'desy@dev.com' . '@$@' . $year),
         ]);
+        }
+        
     }
 }

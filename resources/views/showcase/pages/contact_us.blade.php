@@ -94,6 +94,16 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <input type="text" name="object" value="{{ old('object') }}" class="form-control @error('object') is-invalid @enderror" placeholder="Objet">
+                                        @error('object')
+                                            <span class="invalid-feedback mb-30" role="alert">
+                                                <em style="color:red; font-size:12px">{{ $message }}</em>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
                                         @error('message')
                                             <span class="invalid-feedback" role="alert">
                                                 <em style="color:red; font-size:12px">{{ $message }}</em>
@@ -181,8 +191,13 @@
                     phone_number: {
                         required: true,
                     },
+                    object: {
+                        required: true,
+                        maxlength: 150,
+                    },
                     message: {
                         required: true,
+                        maxlength: 255,
                     },
                 },
                 messages: {
@@ -200,13 +215,18 @@
                     },
                     email: {
                         required: "Le champ email est obligatoire.",
-                        email: "Lfrefferfreferfeépasser 255 caractères."
+                        email: "Le champ email est invalide (ex: email@email.com)."
                     },
                     phone_number: {
                         required: "Le champ numéro de téléphone est obligatoire.",
                     },
+                    object: {
+                        required: "Veuillez saisir l'objet du message.",
+                        maxlength: "L'objet du message ne doit pas dépasser 150 caractères.",
+                    },
                     message: {
                         required: "Veuillez saisir le message à envoyer.",
+                        maxlength: "Le message ne doit pas dépasser 255 caractères.",
                     },
                 },
                 errorElement: 'em',

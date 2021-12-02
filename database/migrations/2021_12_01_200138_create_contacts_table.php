@@ -21,6 +21,7 @@ class CreateContactsTable extends Migration
             $table->string('social_reason')->nullable();
             $table->string('email');
             $table->string('phone_number');
+            $table->text('object');
             $table->text('message');
             $table->boolean('is_read')->default(0);
             $table->boolean('is_delete')->default(0);

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\ShowcaseControllers;
 
-use App\Events\NewMessage;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\User;
+use App\Notifications\NewContactMessageNotification;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 
 class ContactController extends Controller
@@ -34,6 +36,7 @@ class ContactController extends Controller
                     'first_name' => 'required|max:100',
                     'email' => 'required|email',
                     'phone_number' => 'required',
+                    'object' => 'required|max:150',
                     'message' => 'required|max:255',
                 ],
                 [
@@ -44,6 +47,8 @@ class ContactController extends Controller
                     'email.required' => "Le champ email est obligatoire.",
                     'email.email' => "Le champ email est invalide (ex: email@email.com).",
                     'phone_number.required' => "Le champ numéro de téléphone est obligatoire.",
+                    'object.required' => "Veuillez saisir l'objet du message.",
+                    'object.max' => "L'objet du message ne doit pas dépasser 150 caractères.",
                     'message.required' => "Veuillez saisir le message à envoyer.",
                     'message.max' => "Le message ne doit pas dépasser 255 caractères.",
                 ]
@@ -55,6 +60,7 @@ class ContactController extends Controller
                     'social_reason' => 'required|max:255',
                     'email' => 'required|email',
                     'phone_number' => 'required',
+                    'object' => 'required|max:150',
                     'message' => 'required|max:255',
                 ],
                 [
@@ -63,6 +69,8 @@ class ContactController extends Controller
                     'email.required' => "Le champ email est obligatoire.",
                     'email.email' => "Le champ email est invalide (ex: email@email.com).",
                     'phone_number.required' => "Le champ numéro de téléphone est obligatoire.",
+                    'object.required' => "Veuillez saisir l'objet du message.",
+                    'object.max' => "L'objet du message ne doit pas dépasser 150 caractères.",
                     'message.required' => "Veuillez saisir le message à envoyer.",
                     'message.max' => "Le message ne doit pas dépasser 255 caractères.",
                 ]
@@ -93,11 +101,12 @@ class ContactController extends Controller
             }
             $contact->email = $request->email;
             $contact->phone_number = $request->phone_number;
+            $contact->object = $request->object;
             $contact->message = $request->message;
             $contact->save();
 
-            // event(new NewMessage($contact));
-            // dd($contact);
+            $users = User::where('user_type', 'Admin')->get();
+            Notification::send($users, new NewContactMessageNotification(Contact::latest()->first()));
 
             Session::flash('success', "Votre message a été envoyé avec succès.");
         } catch (Exception $e) {

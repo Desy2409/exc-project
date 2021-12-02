@@ -44,7 +44,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-    
+
     protected function redirectTo()
     {
         $guard = session("auth");
@@ -174,15 +174,15 @@ class RegisterController extends Controller
         $user = new User();
         if (isset($data['user_type'])) {
             if ($data['user_type'] == 'Admin') {
-                $user->name = $data['last_name'] . ' ' . $data['first_name'];
+                $user->name =  $data['first_name'].' '.$data['last_name'];
             } elseif ($data['user_type'] == 'Client') {
                 if (isset($data['person_type'])) {
                     if ($data['person_type'] == 'Personne physique') {
-                        if ($data['civility'] == 'Autre') {
-                            $user->name = $data['last_name'] . ' ' . $data['first_name'];
-                        } else {
-                            $user->name = $data['civility'] . ' ' . $data['last_name'] . ' ' . $data['first_name'];
-                        }
+                        // if ($data['civility'] == 'Autre') {
+                        $user->name = $data['first_name'].' '.$data['last_name'];
+                        // } else {
+                        //     $user->name = $data['civility'] . ' ' . $data['last_name'] . ' ' . $data['first_name'];
+                        // }
                     } elseif ($data['person_type'] == 'Entreprise') {
                         $user->name = $data['social_reason'];
                     }
@@ -191,6 +191,7 @@ class RegisterController extends Controller
         }
         $user->email = $data['email'];
         $user->password = Hash::make($data['password']);
+        $user->user_type = $data['user_type'];
         if ($lastUser) {
             $user->token = Crypt::encrypt($user->name . '@$@' . $lastUser->id + 1, '');
         } else {
@@ -207,8 +208,8 @@ class RegisterController extends Controller
                 $administrator->save();
             } else {
                 if (isset($data['person_type'])) {
+                    $client = new Client();
                     if ($data['person_type'] == 'Personne physique') {
-                        $client = new Client();
                         $client->person_type = $data['person_type'];
                         $client->civility = $data['civility'];
                         $client->last_name = $data['last_name'];
@@ -216,7 +217,7 @@ class RegisterController extends Controller
                         $client->user_id = $user->id;
                         $client->save();
                     } elseif ($data['person_type'] == 'Entreprise') {
-                        $client = new Client();
+                        // $client = new Client();
                         $client->person_type = $data['person_type'];
                         $client->social_reason = $data['social_reason'];
                         $client->user_id = $user->id;

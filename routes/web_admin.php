@@ -63,4 +63,9 @@ Route::prefix('admin-area')->group(function () {
     Route::get('/old-messages', [OldMessageController::class, 'index'])->name('old_message.index');
     // Basket messages routes
     Route::get('/basket', [BasketMessageController::class, 'index'])->name('basket.index');
+    
+    
+    
+    //Notifications : contact us
+    Route::get('/contact-message-notification', [AdminController::class, 'contactNotification']);
 });
