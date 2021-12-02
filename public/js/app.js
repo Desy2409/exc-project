@@ -5314,9 +5314,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  // name:"contact-us",
   props: ['contacts']
 });
 
@@ -5370,7 +5369,9 @@ __webpack_require__.r(__webpack_exports__);
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
+window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]); // window._ = require('lodash');
+// wwindow.$ = window.jQuery = require('jquery');
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -5382,7 +5383,7 @@ window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', (__webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]));
-Vue.component('contact-notification', (__webpack_require__(/*! ./components/ContactMessageNotification.vue */ "./resources/js/components/ContactMessageNotification.vue")["default"]));
+Vue.component('contact-us', (__webpack_require__(/*! ./components/ContactMessageNotification.vue */ "./resources/js/components/ContactMessageNotification.vue")["default"]));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -5391,10 +5392,13 @@ Vue.component('contact-notification', (__webpack_require__(/*! ./components/Cont
 
 var app = new Vue({
   el: '#app',
-  data: function data() {
-    return {
-      contacts: ''
-    };
+  component: {
+    'contact-us': __webpack_require__(/*! ./components/ContactMessageNotification.vue */ "./resources/js/components/ContactMessageNotification.vue")
+  },
+  data: {
+    // return {
+    contacts: '' // }
+
   },
   created: function created() {
     var _this = this;
@@ -5404,14 +5408,14 @@ var app = new Vue({
         _this.contacts = response.data;
         console.log(response.data);
       });
-      Echo["private"]('App.Models.User' + window.Laravel.userId).notification(function (reponse) {
+      Echo["private"]('App.Models.User' + window.Laravel.userId).notification(function (response) {
         data = {
-          "data": reponse
+          "data": response
         };
 
         _this.contacts.push(data);
 
-        console.log(reponse);
+        console.log(response);
       });
     }
   }
@@ -28103,7 +28107,9 @@ var staticRenderFns = [
       [
         _c("div", { staticClass: "dropdown-menu-header" }, [
           _c("div", { staticClass: "position-relative" }, [
-            _vm._v("\n                4 New Messages\n            "),
+            _vm._v(
+              "\r\n                                        4 New Messages\r\n                                    "
+            ),
           ]),
         ]),
         _vm._v(" "),

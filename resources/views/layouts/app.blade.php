@@ -86,18 +86,22 @@
                     @include('admin.components.footer')
                 @endauth
                 @auth('client')
-                    @include('client.components.header')
+                    @include('client.components.footer')
                 @endauth
-                @include('client.components.footer')
+
             </div>
         </div>
+
+        
         <script src="{{ asset('assets/admin/js/app.js') }}"></script>
+        {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 
         <!-- jquery-validation -->
         <script src="{{ asset('assets/customs/js/jquery-validation/jquery.validate.min.js') }}"></script>
         <script src="{{ asset('assets/customs/js/jquery-validation/additional-methods.min.js') }}"></script>
 
-        <script src="{{ asset('webpush/js/enable-push.js') }}" defer></script>
+        {{-- <script src="{{ asset('webpush/js/enable-push.js') }}" defer></script> --}}
+        
 
         @yield('script')
     @endauth

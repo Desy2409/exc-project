@@ -7,6 +7,9 @@
 require('./bootstrap');
 
 window.Vue = require('vue').default;
+// window._ = require('lodash');
+// wwindow.$ = window.jQuery = require('jquery');
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,7 +23,7 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('contact-notification', require('./components/ContactMessageNotification.vue').default);
+Vue.component('contact-us', require('./components/ContactMessageNotification.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -30,10 +33,13 @@ Vue.component('contact-notification', require('./components/ContactMessageNotifi
 
 const app = new Vue({
     el: '#app',
-    data() {
-        return {
-            contacts: '',
-        }
+    component: {
+        'contact-us': require('./components/ContactMessageNotification.vue')
+    },
+    data: {
+        // return {
+        contacts: '',
+        // }
     },
     created() {
         if (window.Laravel.userId) {
@@ -42,10 +48,10 @@ const app = new Vue({
                 console.log(response.data)
             });
 
-            Echo.private('App.Models.User' + window.Laravel.userId).notification((reponse) => {
-                data = { "data": reponse };
+            Echo.private('App.Models.User' + window.Laravel.userId).notification((response) => {
+                data = { "data": response };
                 this.contacts.push(data);
-                console.log(reponse);
+                console.log(response);
             });
         }
     },
