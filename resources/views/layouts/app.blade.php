@@ -94,7 +94,6 @@
 
         
         <script src="{{ asset('assets/admin/js/app.js') }}"></script>
-        {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 
         <!-- jquery-validation -->
         <script src="{{ asset('assets/customs/js/jquery-validation/jquery.validate.min.js') }}"></script>

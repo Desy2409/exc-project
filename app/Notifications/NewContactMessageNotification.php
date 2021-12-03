@@ -2,8 +2,10 @@
 
 namespace App\Notifications;
 
+use App\Models\Contact;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -18,7 +20,7 @@ class NewContactMessageNotification extends Notification
      *
      * @return void
      */
-    public function __construct($contact)
+    public function __construct(Contact $contact)
     {
         $this->contact = $contact;
     }
@@ -31,20 +33,18 @@ class NewContactMessageNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database','broadcast'];
+        return ['database', 'broadcast'];
     }
 
     public function toDatabase($notifiable)
     {
         return [
-            'contact'=>$this->contact,
+            'contact' => $this->contact,
         ];
     }
 
     public function toBroadcast($notifiable)
     {
-        return [
-            'contact'=>$this->contact,
-        ];
+        return new BroadcastMessage(['contact' => $this->contact]);
     }
 }

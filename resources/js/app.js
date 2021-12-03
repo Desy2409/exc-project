@@ -23,7 +23,7 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('contact-us', require('./components/ContactMessageNotification.vue').default);
+// Vue.component('contact-us', require('./components/ContactMessageNotification.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -33,26 +33,26 @@ Vue.component('contact-us', require('./components/ContactMessageNotification.vue
 
 const app = new Vue({
     el: '#app',
-    component: {
-        'contact-us': require('./components/ContactMessageNotification.vue')
-    },
-    data: {
-        // return {
-        contacts: '',
-        // }
-    },
-    created() {
-        if (window.Laravel.userId) {
-            axios.get('/contact-message-notification').then(response => {
-                this.contacts = response.data;
-                console.log(response.data)
-            });
+    // component: {
+    //     'contact-us': require('./components/ContactMessageNotification.vue')
+    // },
+    // data: {
+    //     // return {
+    //     contacts: '',
+    //     // }
+    // },
+    // created() {
+    //     if (window.Laravel.userId) {
+    //         axios.get('/contact-message-notification').then(response => {
+    //             this.contacts = response.data;
+    //             console.log(response.data)
+    //         });
 
-            Echo.private('App.Models.User' + window.Laravel.userId).notification((response) => {
-                data = { "data": response };
-                this.contacts.push(data);
-                console.log(response);
-            });
-        }
-    },
+    //         Echo.private('App.Models.User' + window.Laravel.userId).notification((response) => {
+    //             data = { "data": response };
+    //             this.contacts.push(data);
+    //             console.log(response);
+    //         });
+    //     }
+    // },
 });
